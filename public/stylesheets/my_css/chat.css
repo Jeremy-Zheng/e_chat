@@ -1,0 +1,39 @@
+h1 {
+    color: #3498DB;
+    text-align: center;
+}
+
+textarea {
+    display: block;
+    padding: 15px;
+    margin: 0 auto;
+    width: 480px;
+    height: 480px;
+    background: none;
+    border-color: #3498DB;
+    line-height: 24px;
+}
+.input-group{
+    width: 480px;
+    margin: 10px auto;
+}
+
+#notice{
+    display: none;
+    margin-top: 8px;
+    padding: 9px;
+    width: 100%;
+    cursor: pointer;
+}
+
+/*---重写bootstrap样式----------*/
+.tooltip{
+    font-family: "微软雅黑";
+}
+
+
+
+
+
+
+

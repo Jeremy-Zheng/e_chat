@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>Epoching聊天室---Easy chat</title>
+
+        <link rel="stylesheet" href="stylesheets/libs/bootstrap.min.css"/>
+        <link rel="stylesheet" href="stylesheets/my_css/chat.css"/>
+
+        <script src="javascripts/libs/jquery-2.1.1.min.js"></script>
+        <script src="javascripts/libs/bootstrap.min.js"></script>
+
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+
+    <body>
+
+        <div class="modal fade" id="myModal"
+             data-keyboard="false"
+             data-backdrop="static"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="myModalLabel">
+            aria-hidden="true">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">
+                            请填写您的姓名:
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <input id="name" type="text" class="form-control">
+
+                        <span id="notice" class="label label-danger">对不起，请正确填写姓名……</span>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button id="submit_btn" type="button" class="btn btn-primary">
+                            确定
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <h1>Easy talk</h1>
+
+        <textarea id="textarea" disabled="disabled"></textarea>
+
+        <div class="input-group">
+            <input id="text" type="text" class="form-control">
+
+            <div class="input-group-btn">
+                <button id="submit" class="btn btn-success">send</button>
+            </div>
+        </div>
+
+    </body>
+</html>
+
+
+<script>
+
+    $(document).ready(function () {
+
+
+        var socket = io();
+        var $_textarea = $("#textarea");
+        var $_submit = $("#submit");
+        var $_input = $("#text");
+
+
+        //刚开始 就显示模态框 要用户输入自己的名字
+        //并且让输入框获取到焦点
+        var $_modal = $("#myModal");
+        var $_name = $("#name");
+        $_modal.modal('show');
+        $_modal.on('shown.bs.modal', function () {
+            $_name.focus();
+        });
+
+        //点击提交姓名按钮
+        $("#submit_btn").on("click", function () {
+
+            //判断字符串长度,不符合要求就进行提示
+            if ($_name.val() == "" || $_name.val() == null) {
+                $("#notice").slideDown();
+                $("#notice").on("click", function () {
+                    $(this).slideUp();
+                    $(this).removeAllListeners();
+                });
+
+                return false;
+            }
+
+            //提交到后台
+            socket.emit('name', $_name.val());
+
+
+            //隐藏模态框,聊天输入框获取焦点
+            $_modal.modal('hide');
+            $_input.focus();
+
+        });
+
+        //接受一个是否登陆成功的参数
+        socket.on('name', function (data) {
+            console.log(data+" 登陆成功，可以开始聊天了……");
+        });
+
+        //接受聊天消息,显示到消息面板上
+        socket.on('msg', function (data) {
+            $_textarea.append(data + "\n");
+        });
+
+        //点击发送消息
+        $_submit.on("click", function () {
+
+            //发送消息
+            socket.emit('msg', $_input.val());
+
+            //输入框清空，获取焦点
+            $_input.val("");
+            $_input.focus();
+        });
+
+    })
+</script>
