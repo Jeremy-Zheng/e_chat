@@ -39,7 +39,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button id="submit_btn" type="button" class="btn btn-primary">
+                        <button id="submit_name" type="button" class="btn btn-primary">
                             确定
                         </button>
                     </div>
@@ -48,7 +48,6 @@
 
         </div>
 
-
         <h1>Easy talk</h1>
 
         <div class="input-group">
@@ -56,11 +55,9 @@
 
             <div class="input-group-btn">
                 <button id="start_chat" class="btn btn-success">开始聊天</button>
-                <button id="exchange" class="btn btn-primary">切换</button>
+                <button id="change" class="btn btn-primary">切换</button>
             </div>
         </div>
-
-
 
         <textarea id="textarea" disabled="disabled"></textarea>
 
@@ -68,7 +65,7 @@
             <input id="text" type="text" class="form-control">
 
             <div class="input-group-btn">
-                <button id="submit" class="btn btn-success">send</button>
+                <button id="submit_msg" class="btn btn-success">send</button>
             </div>
         </div>
 
@@ -80,11 +77,15 @@
 
     $(document).ready(function () {
 
-
         var socket = io();
-        var $_textarea = $("#textarea");
-        var $_submit = $("#submit");
-        var $_input = $("#text");
+        var $_textarea = $("#textarea");        //显示文本框区域
+        var $_submit_name = $("#submit_name");  //提交名字信息的按钮
+        var $_submit_msg = $("#submit_msg");    //提交发送聊天信息的按钮
+        var $_input = $("#text");               //输入框
+        var $_start_btn=$("#start_chat");       //开始聊天按钮
+        var $_change_btn=$("#change");          //切换聊天按钮
+
+        var is_pair=false;
 
 
         //刚开始 就显示模态框 要用户输入自己的名字
@@ -97,8 +98,7 @@
         });
 
         //点击提交姓名按钮
-        $("#submit_btn").on("click", function () {
-
+        $_submit_name.on("click", function () {
             //判断字符串长度,不符合要求就进行提示
             if ($_name.val() == "" || $_name.val() == null) {
                 $("#notice").slideDown();
@@ -120,21 +120,60 @@
 
         });
 
+        //发送一个信号给后台，表示可以为我配对聊天了
+        $_start_btn.on("click",function(){
+           socket.emit("is_ready",true);
+           socket.on("is_ready",function(data){
+               if(data==true){
+                   $_start_btn.hide();
+               }
+           })
+
+
+        });
+
+        //点击发送消息
+        $_submit_msg.on("click", function () {
+
+            if(is_pair){
+                //发送消息
+                socket.emit('msg', $_input.val());
+            }
+            else{
+                $_textarea.append("对不起你还没有配对……" + "\n");
+            }
+
+            //输入框清空，获取焦点
+            $_input.val("");
+            $_input.focus();
+        });
+
+        //点击切换聊天
+        $_change_btn.on("click",function(){
+
+            if(is_pair){
+                socket.emit("change","true");
+            }
+            else{
+                $_textarea.append("对不起你还没有配对……" + "\n");
+            }
+
+
+        });
+
+        //接受后台给的信号表示现在处于配对状态
+        socket.on("is_pair",function(data){
+            is_pair=data;
+        });
 
         //接受聊天消息,显示到消息面板上
         socket.on('msg', function (data) {
             $_textarea.append(data + "\n");
         });
 
-        //点击发送消息
-        $_submit.on("click", function () {
-
-            //发送消息
-            socket.emit('msg', $_input.val());
-
-            //输入框清空，获取焦点
-            $_input.val("");
-            $_input.focus();
+        //接受聊天消息,显示到消息面板上
+        socket.on('disconnect', function (data) {
+            $_textarea.append("fuck，服务器挂掉了……" + "\n");
         });
 
     })
