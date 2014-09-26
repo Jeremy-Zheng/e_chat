@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+
+        <link rel="stylesheet" href="stylesheets/libs/bootstrap.min.css"/>
+
+        <script src="javascripts/libs/jquery-2.1.1.min.js"></script>
+        <script src="javascripts/libs/bootstrap.min.js"></script>
+        <script src="javascripts/libs/perfect-scrollbar.min.js"></script>
+        <link rel="stylesheet" href="stylesheets/libs/perfect-scrollbar.min.css"/>
+
+        <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1,
+        maximum-scale=1, user-scalable=no">
+    </head>
+    <body>
+<!--
+aria-hidden="true"
+ tabindex="-1"
+
+-->
+        <div class="modal fade" id="notice"
+             aria-labelledby="myModalLabel"
+             data-show="true"
+             role="dialog"
+             data-backdrop="static">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            模态框（Modal）标题
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+                       <h3></h3>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">确定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </body>
+    <script>
+
+        $("#myModal").modal('show');
+
+    </script>
+
+
+</html>
