@@ -2,34 +2,43 @@
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title>Epoching聊天室---Easy chat</title>
+        <title>CooCoo-随机聊::来这里邂逅你的美好!</title>
+        <link rel="shortcut icon" href="res/logo.ico">
+
+        <div id='wx_pic' style='margin:0 auto;display:none;'>
+            <img src='res/logo.jpg'/>
+        </div>
+
+        <meta name="keywords" content="coocoo,聊天，随机聊天，交友，随机交友，在线聊天，陌生人聊天，偶遇，邂逅">
+        <meta name="description" content="coocoo是一个随机聊天，交友平台，可以在线聊天，和陌生人聊天，偶遇，邂逅……">
 
         <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1,
         maximum-scale=1, user-scalable=no">
 
-        <link rel="stylesheet" href="stylesheets/libs/bootstrap.min.css"/>
-        <link rel="stylesheet" href="stylesheets/libs/perfect-scrollbar.min.css"/>
-        <link rel="stylesheet" href="stylesheets/my_css/chat.css"/>
+        <link rel="stylesheet" href="css/libs/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/libs/perfect-scrollbar.min.css"/>
+        <link rel="stylesheet" href="css/my_css/chat.css"/>
 
-        <script src="javascripts/libs/jquery-2.1.1.min.js"></script>
-        <script src="javascripts/libs/bootstrap.min.js"></script>
-        <script src="javascripts/libs/perfect-scrollbar.min.js"></script>
+        <script src="js/libs/jquery-2.1.1.min.js"></script>
+        <script src="js/libs/bootstrap.min.js"></script>
+        <script src="js/libs/perfect-scrollbar.min.js"></script>
 
         <!--<script src="/socket.io/socket.io.js"></script>-->
-        <script src="javascripts/libs/socket.io-1.1.0.js"></script>
+        <script src="js/libs/socket.io-1.1.0.js"></script>
 
     </head>
 
     <body>
-            <div class="container">
+        <div class="container">
 
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="input-group">
-                        <h3>Easy Chat</h3>
+                        <h3>CooCoo</h3>
 
                         <div class="input-group-btn" id="chat_btn_group">
-                            <button id="change" class="btn btn-primary">切换对象</button>
+                            <button id="change" class="btn btn-primary">换个人聊</button>
+                            <a href="feedback" target="_blank" class="btn btn-default">反馈建议</a>
                         </div>
                     </div>
                 </div>
@@ -37,9 +46,9 @@
 
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <div id="textarea" disabled="disabled">
+                    <div id="textarea">
                         <div class="name" id="name">
-                            <p>您的小号：</p>
+                            <p>请输入你的昵称：</p>
 
                             <input id="nick_name" type="text" class="form-control">
 
@@ -104,27 +113,33 @@
                     </div>
 
                     <div class="modal-body">
-                        <p> 1、传输和利用信息符合中国法律、国际公约的规定、符合公序良俗；</p>
-                        <p> 2、不将本网站以及与之相关的网络服务用作非法用途以及非正当用途；</p>
-                        <p> 3、不干扰和扰乱本网站以及与之相关的网络服务；</p>
+                        <p> 1、传输和利用信息符合中国法律、国际公约的规定、符合公序良俗。</p>
+
+                        <p> 2、不将本网站以及与之相关的网络服务用作非法用途以及非正当用途。</p>
+
+                        <p> 3、不干扰和扰乱本网站以及与之相关的网络服务。</p>
+
                         <p> 4、遵守与本网站以及与之相关的网络服务的协议、规定、程序和惯例等。</p>
 
-                        <p>
-                            <span style="color: red">5、点击同意视为你已阅读并同意我们的详细协议----</span>
-                            <a href="http://www.epoching.com/" target="_blank">详细协议地址</a>
-                        </p>
+                        <p> 5、点击同意视为你已阅读并同意我们的详细协议。</p>
 
+                        <p> 6、<a href="http://www.epoching.com/" target="_blank">详细协议地址</a></p>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"
-                                data-dismiss="modal">同意并开始聊天
+                                data-dismiss="modal">同意
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script src="javascripts/my_js/chat_client.js"></script>
+        <audio id="audio" src="res/tip.mp3"></audio>
+
+        <script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+        <script src="js/my_js/chat_client.js"></script>
     </body>
 </html>
+
+
